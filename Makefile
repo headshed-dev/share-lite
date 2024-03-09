@@ -1,3 +1,6 @@
+runup:
+	@make setup
+	@make data
 setup:
 	@make build
 	@make up 
@@ -13,4 +16,5 @@ composer-update:
 data:
 	docker exec laravel-docker bash -c "php artisan migrate --force"
 	docker exec laravel-docker bash -c "php artisan db:seed"
+	docker exec laravel-docker bash -c "chown -R www-data:www-data /var/www/html"
 
