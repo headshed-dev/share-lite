@@ -7,6 +7,7 @@ use App\Models\Blog;
 use Filament\Tables;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Illuminate\Support\Str;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Section;
 use Filament\Tables\Columns\TextColumn;
@@ -14,11 +15,8 @@ use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Forms\Components\FileUpload;
-use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\MarkdownEditor;
 use App\Filament\Resources\BlogResource\Pages;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\BlogResource\RelationManagers;
 
 class BlogResource extends Resource
 {
@@ -30,14 +28,21 @@ class BlogResource extends Resource
     {
         return $form
             ->schema([
-
-                Section::make('create a posting')
+                Section::make('new post')
                     ->description('news and views')
                     ->collapsible()
                     ->schema([
                         TextInput::make('title')
                             ->label('Title')
-                            ->required(),
+                            ->required()
+                            ->minLength(3)
+                            ->maxLength(255)
+                            ->live(onBlur: true)
+                            ->afterStateUpdated(function (string $operation, string $state, Forms\Set $set) {
+                                // dump($operation);
+                                // dump($state);
+                                $set('slug', Str::slug($state));
+                            }),
                         TextInput::make('slug')
                             ->label('Slug')
                             ->required(),
@@ -66,7 +71,6 @@ class BlogResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('title')
-
                     ->searchable()
                     ->label('Title'),
                 TextColumn::make('slug')
