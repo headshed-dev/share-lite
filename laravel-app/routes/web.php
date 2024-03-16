@@ -14,6 +14,10 @@ use App\Http\Controllers\BlogController;
 |
 */
 
+// if ($blog->user) {
+//     $name = $blog->user->name;
+// }
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -22,7 +26,7 @@ Route::get('/', function () {
 //     ->middlew
 
 Route::get('thoughts', [BlogController::class, 'index'])
-    ->middleware(['auth', 'verified'])
+    // ->middleware(['auth', 'verified'])
     ->name('thoughts');
 
 
