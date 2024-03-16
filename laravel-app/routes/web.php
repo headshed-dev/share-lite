@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BlogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +17,15 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+// Route::get('thought, [BlogCtroller::class, 'index'])
+//     ->middlew
+
+Route::get('thoughts', [BlogController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('thoughts');
+
+
 
 Route::middleware([
     'auth:sanctum',
