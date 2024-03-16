@@ -6,7 +6,7 @@ new class extends Component {
     public string $message = '';
 }; ?>
 
-<div>
-    <h1 class="text-xl text-blue-600">Thoughts ...</h1>
+<div class="mb-9 mt-9">
+    <h1 class="text-3xl text-green-600">Welcome to Thoughts</h1>
 
 </div>
