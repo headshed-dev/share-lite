@@ -5,19 +5,20 @@ namespace App\Filament\Resources;
 use Filament\Forms;
 use Filament\Tables;
 use Filament\Forms\Form;
-use Forms\DateTimePicker;
 use Filament\Tables\Table;
 use App\Models\Appointment;
 use Filament\Resources\Resource;
 use App\Models\AppointmentDuration;
 use Filament\Forms\Components\Select;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\TimePicker;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Forms\Components\DateTimePicker;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\AppointmentResource\Pages;
 use App\Filament\Resources\AppointmentResource\RelationManagers;
-use Filament\Tables\Columns\TextColumn;
 
 class AppointmentResource extends Resource
 {
@@ -29,8 +30,8 @@ class AppointmentResource extends Resource
     {
         return $form
             ->schema([
-                DatePicker::make('appointment_date')
-                    ->label('Appointment Date')
+                DateTimePicker::make('appointment_date')
+                    ->label('Date')
                     ->required(),
                 Select::make('appointment_durations_id')
                     ->label('Appointment Duration')
@@ -51,10 +52,13 @@ class AppointmentResource extends Resource
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('appointmentDuration.name')
-                    ->label('Appointment Duration')
+                    ->label('Appointment')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('appointmentDuration.duration_in_minutes')
+                    ->label('Duration')
                     ->searchable()
                     ->sortable()
-
             ])
             ->filters([
                 //
