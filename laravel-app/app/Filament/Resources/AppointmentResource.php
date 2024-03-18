@@ -37,7 +37,12 @@ class AppointmentResource extends Resource
                 Select::make('appointment_durations_id')
                     ->label('Appointment Duration')
                     ->relationship('appointmentDuration', 'name')
-                    ->required()
+                    ->required(),
+                Select::make('user_id')
+                    ->label('User')
+                    ->relationship('user', 'email')
+                    ->searchable()
+
             ]);
     }
 
