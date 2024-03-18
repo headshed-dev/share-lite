@@ -18,4 +18,9 @@ class Appointment extends Model
     {
         return $this->belongsTo(AppointmentDuration::class, 'appointment_durations_id');
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

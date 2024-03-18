@@ -19,6 +19,7 @@ use Filament\Forms\Components\DateTimePicker;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\AppointmentResource\Pages;
 use App\Filament\Resources\AppointmentResource\RelationManagers;
+use Faker\Provider\ar_EG\Text;
 
 class AppointmentResource extends Resource
 {
@@ -35,9 +36,6 @@ class AppointmentResource extends Resource
                     ->required(),
                 Select::make('appointment_durations_id')
                     ->label('Appointment Duration')
-                    // ->options(
-                    //     AppointmentDuration::all()->pluck('name', 'id')
-                    // )
                     ->relationship('appointmentDuration', 'name')
                     ->required()
             ]);
@@ -55,10 +53,19 @@ class AppointmentResource extends Resource
                     ->label('Appointment')
                     ->searchable()
                     ->sortable(),
+                TextColumn::make('appointmentDuration.name')
+                    ->label('Appointment')
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('appointmentDuration.duration_in_minutes')
                     ->label('Duration')
                     ->searchable()
+                    ->sortable(),
+                TextColumn::make('user.email')
+                    ->label('user')
+                    ->searchable()
                     ->sortable()
+
             ])
             ->filters([
                 //
